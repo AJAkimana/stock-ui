@@ -13,7 +13,6 @@ import {
   ListItemIcon,
   ListItemText,
   useTheme,
-  //   useMediaQuery,
 } from '@mui/material';
 import {
   Menu as MenuIcon,
@@ -25,18 +24,13 @@ import {
   AccountBalance,
   BusinessCenter,
 } from '@mui/icons-material';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, Outlet, useLocation } from 'react-router-dom';
 
 const drawerWidth = 260;
 
-interface LayoutProps {
-  children: React.ReactNode;
-}
-
-const Layout: React.FC<LayoutProps> = ({ children }) => {
+const Layout: React.FC = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const theme = useTheme();
-  //   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const location = useLocation();
 
   const handleDrawerToggle = () => {
@@ -187,7 +181,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           backgroundColor: theme.palette.background.default,
         }}
       >
-        {children}
+        <Outlet />
       </Box>
     </Box>
   );

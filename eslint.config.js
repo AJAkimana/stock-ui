@@ -22,6 +22,8 @@ export default tseslint.config(
       'react-refresh/only-export-components': [
         'warn',
         { allowConstantExport: true },
+        // Add a rule to ignore _ char
+        { ignorePattern: '^_' },
       ],
     },
   }
