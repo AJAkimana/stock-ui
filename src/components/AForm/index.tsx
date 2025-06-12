@@ -17,12 +17,10 @@ export interface AFormField {
   [key: string]: any;
 }
 
-export interface AFormProps {
-  fields?: AFormField[][];
-  states?: Record<string, any> | null;
-  setStates?: (
-    updater: (prev: Record<string, any>) => Record<string, any>
-  ) => void;
+interface AFormProps<T extends Record<string, any>> {
+  fields: AFormField[][];
+  states: T | null;
+  setStates: React.Dispatch<React.SetStateAction<T>>;
 }
 
 // Interface for handleChange function
@@ -48,11 +46,11 @@ type GetSizesFn = (rowsLength: number) => {
   xs: number;
 };
 
-export const AForm: React.FC<AFormProps> = ({
-  fields = [],
-  states = null,
-  setStates = () => {},
-}) => {
+export const AForm = <T extends Record<string, any>>({
+  fields,
+  states,
+  setStates,
+}: AFormProps<T>) => {
   const [localFields, setLocalFields] = React.useState(fields);
   useEffect(() => {
     if (states) {

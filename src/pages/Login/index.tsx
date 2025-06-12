@@ -9,9 +9,17 @@ import {
   Typography,
 } from '@mui/material';
 
-import { Copyright } from '../components/Copyright';
+import { Copyright } from '../../components/Copyright';
+import { useState } from 'react';
+import { AForm } from '../../components/AForm';
+import { loginSchema } from './schema';
 
+const initialStates = {
+  email: '',
+  password: '',
+};
 const Login = () => {
+  const [loginInfo, setLoginInfo] = useState(initialStates);
   return (
     <Container component="main" maxWidth="xs">
       <Box
@@ -29,50 +37,11 @@ const Login = () => {
           Sign in
         </Typography>
         <Box component="form" noValidate sx={{ mt: 1 }}>
-          {/* Add login email, and password form */}
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: 2,
-              mb: 2,
-            }}
-          >
-            <Box
-              component="input"
-              type="email"
-              placeholder="Email Address"
-              required
-              sx={{
-                width: '100%',
-                padding: '10px',
-                borderRadius: '4px',
-                border: '1px solid #ccc',
-                fontSize: '1rem',
-                '&:focus': {
-                  borderColor: '#3f51b5',
-                  outline: 'none',
-                },
-              }}
-            />
-            <Box
-              component="input"
-              type="password"
-              placeholder="Password"
-              required
-              sx={{
-                width: '100%',
-                padding: '10px',
-                borderRadius: '4px',
-                border: '1px solid #ccc',
-                fontSize: '1rem',
-                '&:focus': {
-                  borderColor: '#3f51b5',
-                  outline: 'none',
-                },
-              }}
-            />
-          </Box>
+          <AForm
+            fields={loginSchema()}
+            states={loginInfo}
+            setStates={setLoginInfo}
+          />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
