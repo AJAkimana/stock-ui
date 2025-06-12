@@ -1,3 +1,5 @@
+import type { IAPI } from '../appTypes/states';
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export const startCase = (str = '', toUpper = true) => {
   const sentences = str.toLowerCase().split(' ');
@@ -53,7 +55,7 @@ export const formatParamaterizedUrl = (
 };
 
 export const formulateQuery =
-  ({ endpoint, verb, hasBody, isDownload }: AJA.IAPI) =>
+  ({ endpoint, verb, hasBody, isDownload }: IAPI) =>
   (args = {}) => {
     const query = {
       url: endpoint,

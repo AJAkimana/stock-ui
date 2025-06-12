@@ -7,16 +7,17 @@ import { formulateQuery, startCase } from './utils';
 import { lStorage } from '../libs/constants';
 import { buildAppStates } from './stateBuilder';
 import type { EndpointDefinitions } from '@reduxjs/toolkit/query';
+import type { IActionSchema, IStateSchema } from '../appTypes/states';
 
 const states = buildAppStates();
 
-const buildApiEndpoints = (build: any, state: AJA.IStateSchema) => {
+const buildApiEndpoints = (build: any, state: IStateSchema) => {
   const { actions } = state;
   const endpoints = {} as EndpointDefinitions;
   Object.keys(actions).forEach((key) => {
-    const current = actions[key] as AJA.IActionSchema;
+    const current = actions[key] as IActionSchema;
     let buildType = 'query';
-    if (current?.api?.verb !== AJA.Verb.GET || current?.api?.isMutation) {
+    if (current?.api?.verb !== 'GET' || current?.api?.isMutation) {
       buildType = 'mutation';
     }
     endpoints[current.action!] = build[buildType]({

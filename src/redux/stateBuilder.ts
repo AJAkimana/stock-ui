@@ -1,6 +1,7 @@
+import type { IStateSchema } from '../appTypes/states';
 import { appStates } from './states';
 
-const buildState = (state: AJA.IStateSchema) => {
+const buildState = (state: IStateSchema) => {
   const { actions, entity } = state;
 
   const newActions = actions; // { add: {}}
