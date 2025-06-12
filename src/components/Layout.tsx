@@ -24,7 +24,7 @@ import {
   AccountBalance,
   BusinessCenter,
 } from '@mui/icons-material';
-import { Link, Outlet, useLocation } from 'react-router-dom';
+import { Link, Outlet, useLocation } from 'react-router';
 
 const drawerWidth = 260;
 
