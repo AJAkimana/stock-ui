@@ -18,6 +18,11 @@ const initialStates = {
   email: '',
   password: '',
 };
+const redirectToDashboard = () => {
+  setTimeout(() => {
+    window.location.replace('/');
+  }, 5000);
+};
 const Login = () => {
   const [loginInfo, setLoginInfo] = useState(initialStates);
   return (
