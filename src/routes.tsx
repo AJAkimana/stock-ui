@@ -8,7 +8,7 @@ export const AppRoutes = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route index element={<Login />} />
+        <Route index element={<Login shouldRedirect />} />
         <Route
           path="admin"
           element={

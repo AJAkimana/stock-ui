@@ -10,9 +10,14 @@ import {
 } from '@mui/material';
 
 import { Copyright } from '../../components/Copyright';
-import { useState } from 'react';
-import { AForm } from '../../components/AForm';
+import { useEffect, useState } from 'react';
 import { loginSchema } from './schema';
+import { MFForm } from 'react-mui-form';
+import { actions, setUser } from '../../redux/actions';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import type { RootState } from '../../redux/store';
+import { lStorage, notifier } from '../../libs/constants';
 
 const initialStates = {
   email: '',
@@ -20,11 +25,48 @@ const initialStates = {
 };
 const redirectToDashboard = () => {
   setTimeout(() => {
-    window.location.replace('/');
+    window.location.replace('/admin');
   }, 5000);
 };
-const Login = () => {
+const Login = ({ shouldRedirect = false }) => {
   const [loginInfo, setLoginInfo] = useState(initialStates);
+
+  const [loginUser, { isLoading, isSuccess, data }] =
+    actions.useLoginAuthMutation();
+
+  const dispatch = useDispatch();
+
+  const { isAuthenticated } = useSelector((state: RootState) => state.auth);
+
+  useEffect(() => {
+    if (isAuthenticated && shouldRedirect) {
+      redirectToDashboard();
+    }
+  }, [isAuthenticated, shouldRedirect]);
+
+  useEffect(() => {
+    if (isSuccess && data) {
+      const {
+        message,
+        data: { token, ...user },
+      } = data;
+      let messageToShow = message;
+      if (shouldRedirect) {
+        messageToShow += '. Be redirected in 3 seconds';
+      }
+      notifier.success(messageToShow);
+      lStorage.save(token);
+      dispatch(setUser(user));
+      if (!shouldRedirect) {
+        window.location.reload();
+      }
+    }
+  }, [isSuccess, shouldRedirect]);
+
+  const handleSubmit = (ev: React.MouseEvent<HTMLButtonElement>) => {
+    ev.preventDefault();
+    loginUser(loginInfo);
+  };
   return (
     <Container component="main" maxWidth="xs">
       <Box
@@ -42,7 +84,7 @@ const Login = () => {
           Sign in
         </Typography>
         <Box component="form" noValidate sx={{ mt: 1 }}>
-          <AForm
+          <MFForm
             fields={loginSchema()}
             states={loginInfo}
             setStates={setLoginInfo}
@@ -56,8 +98,10 @@ const Login = () => {
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
+            onClick={handleSubmit}
+            disabled={isLoading}
           >
-            Sign In
+            {isLoading ? 'Signing in...' : 'Sign In'}
           </Button>
           {/* <Grid container>
               <Grid item xs>

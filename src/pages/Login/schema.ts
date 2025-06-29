@@ -1,4 +1,4 @@
-import type { AFormField } from '../../components/AForm';
+import { type MFFormField } from 'react-mui-form';
 
 export const loginSchema = () => [
   [
@@ -9,7 +9,7 @@ export const loginSchema = () => [
       autoComplete: 'email',
       autoFocus: true,
     },
-  ] as AFormField[],
+  ] as MFFormField[],
   [
     {
       name: 'password',
@@ -18,5 +18,5 @@ export const loginSchema = () => [
       autoComplete: 'current-password',
       size: 'medium',
     },
-  ] as AFormField[],
+  ] as MFFormField[],
 ];
