@@ -87,4 +87,9 @@ const buildApiSlicers = () => {
 
 const slicers = buildApiSlicers();
 
-export const { actions, initials, reducers, middlewares } = slicers;
+export const {
+  actions: slicedActions,
+  initials,
+  reducers,
+  middlewares,
+} = slicers;
